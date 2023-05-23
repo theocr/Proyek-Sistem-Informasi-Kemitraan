@@ -1,0 +1,151 @@
+{% extends 'layouts/base-owner.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="main-content">
+    <section class="section">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-primary text-white-all">
+          <li class="breadcrumb-item"><a ><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+          <li class="breadcrumb-item"><a ><i ></i>Pelatihan</a></li>
+        </ol>
+      </nav>
+
+      <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Agenda Pelatihan</h4>
+              </div>
+              <div class="card-body">
+                <div class="text-left">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".tambah-pelatihan">
+                    Tambah Data
+                  </button>
+              </div>
+
+                <p></p>
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
+                    <thead>
+                        <tr>
+                          <th>Status Pendaftaran</th>
+                          <th>Periode Pendaftaran</th>
+                          <th>Periode Pelatihan</th>
+                          <th>Jenis Pelatihan</th>
+                          <th>Nama Pelatihan</th>
+                          <th>Gelombang</th>
+                          <th>Kuota</th>
+                          <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for item in pelatihan_query %}
+                        <tr data-pk="{{item.id_pelatihan}}">
+                          {% if item.status_pendaftaran == 'BELUM AKTIF'  %}
+                            <td>
+                              <div class="badges">
+                                <span class="badge badge-warning">{{item.status_pendaftaran}}</span>
+                              </div>
+                            </td>
+                          {% elif item.status_pendaftaran == 'AKTIF' %}
+                            <td>
+                              <div class="badges">
+                                <span class="badge badge-success">{{item.status_pendaftaran}}</span>
+                              </div>
+                            </td>
+                          {% elif item.status_pendaftaran == 'TUTUP' %}
+                            <td>
+                              <div class="badges">
+                                <span class="badge badge-danger">{{item.status_pendaftaran}}</span>
+                              </div>
+                            </td>
+                          {% endif %}
+                          <td><strong>{{item.awal_periode_pendaftaran|date:"d-m-Y"}}</strong> sd {{item.akhir_periode_pendaftaran|date:"d-m-Y"}}</td>
+                          <td><strong>{{item.awal_periode_pelatihan|date:"d-m-Y"}}</strong> sd {{item.akhir_periode_pelatihan|date:"d-m-Y"}}</td>
+                          <td>{{item.jenis_pelatihan}}</td>
+                          <td>{{item.nama_pelatihan}}</td>
+                          <td>{{item.gelombang}}</td>
+                          <td>{{item.kuota}} peserta</td>
+
+                          <td>
+                            <a style="text-decoration: None;" href="{% url 'owner_pelatihan_update' id=item.id_pelatihan %}" >
+                              <button type="button" class="btn btn-warning">
+                                Update
+                              </button>
+                            </a>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#staticBackdrop{{item.id_pelatihan}}">
+                              Hapus
+                            </button>                                   
+                          </td>
+                        </tr>
+                      {% endfor %}
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+
+<!-- Modal Tambah Recording Panen -->
+<div class="modal fade tambah-pelatihan"  tabindex="-1" role="dialog" aria-labelledby="LargeModaltambah-pelatihan" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form method="post">
+      {% csrf_token %}
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Pelatihan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {% crispy form %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Tambah Data</button>
+        </div>    
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- Modal Hapus Mitra -->
+{% for item in pelatihan_query %}
+<div class="modal fade" id="staticBackdrop{{item.id_pelatihan}}" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel{{item.id_pelatihan}}"
+    aria-hidden="true" name="{{item.id_pelatihan}}">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel{{item.id_pelatihan}}">Hapus Data Pelatihan</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              Anda yakin ingin menghapus data pelatihan ini?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <form method="post" action="{%url 'owner_pelatihan_delete' item.id_pelatihan %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Hapus Data</button>
+              </form>
+
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

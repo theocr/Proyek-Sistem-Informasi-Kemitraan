@@ -1,0 +1,147 @@
+{% extends 'layouts/base-owner.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="main-content">
+    <section class="section">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-primary text-white-all">
+          <li class="breadcrumb-item"><a><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+          <li class="breadcrumb-item"><a><i></i>Laporan Monitoring Produktivitas Mitra</a></li>
+        </ol>
+      </nav>
+
+      <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Laporan Monitoring Produktivitas Mitra</h4>
+              </div>
+              <div class="card-body">
+                <div class="text-left">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".tambah-user">
+                    <i data-feather="file-text"></i><span> SUMMARY</span>
+                  </button>
+                </div>
+                <p></p>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="tabelMonitoring" style="width:100%;">  
+                        <thead>
+                            <tr>
+                            <th>ID Mitra</th>
+                            <th>Nama Mitra</th>
+                            <th>Kuota Paket Cacing</th>
+                            <th>Total Kumulatif Hasil Panen</th>
+                            <th>Persentase Produktivitas Panen</th>
+                            <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in produktivitas_panen_query %}
+                            <tr>
+                            <td>RAJ-MITRA-{{item.id_mitra}}</td>
+                            <td>{{item.nama_mitra}}</td>
+                            <td>{{item.item_cacing}} kg</td>
+                            
+                            {% if item.total_berat_hasil_panen is not None %}
+                              <td>{{item.total_berat_hasil_panen}} kg</td>
+                            {% else %}
+                              <td>0 kg</td>
+                            {% endif %}
+
+                            {% if item.produktivitas is not None %}
+                              <td>{{item.produktivitas}}%</td>
+                            {% else %}
+                              <td>0%</td>
+                            {% endif %}
+
+                            <td>
+                              <a style="text-decoration: None;" href="{% url 'owner_detail_mitra' id=item.id_mitra %}">
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".edit-pakan">
+                                  Detail Mitra
+                                </button>
+                              </a>                              
+                            </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+
+
+<!-- Modal Tambah User -->
+<div class="modal fade tambah-user"  tabindex="-1" role="dialog" aria-labelledby="LargeModaltambah-user" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Summary Report Monitoring Produktivitas Mitra</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+
+          <h6>Hasil Panen</h6>
+          <p style="text-align: justify;">Terhitung hingga tanggal {% now "d-M-Y" %}, total hasil panen keseluruhan yang telah diterima oleh Gudang CV RAJ Organik dari mitra adalah sebanyak <strong>{{kumulatif_berat_panen}} kg</strong>. Dari {{ produktivitas_panen_query.count }} mitra masih terdapat&nbsp;<strong>{{nihil_panen}} mitra</strong><strong>&nbsp;</strong>yang belum memberikan hasil panennya sama sekali ke gudang. Sehingga perlu dilakukan tindakan langsung pada mitra-mitra tersebut dan diberi dukungan untuk mengatasi kendala-kendala yang dihadapi.&nbsp;</p>
+          <h6>Produktivitas Panen</h6>
+          <div class=""group w-full text-gray-800 dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50 bg-gray-50 dark:bg-[#444654]"">
+          <div class=""text-base gap-4 md:gap-6 md:max-w-2xl lg:max-w-xl xl:max-w-3xl p-4 md:py-6 flex lg:px-0 m-auto"">
+          <div class=""relative flex w-[calc(100%-50px)] flex-col gap-1 md:gap-3 lg:w-[calc(100%-115px)]"">
+          <div class=""flex flex-grow flex-col gap-3"">
+          <div class=""min-h-[20px] flex flex-col items-start gap-4 whitespace-pre-wrap break-words"">
+          <div class=""markdown prose w-full break-words dark:prose-invert dark"">
+          <ol>
+          <li>Terdapat <strong>{{low_productivity}} mitra</strong> yang masih di bawah target produktivitas bulanan.&nbsp;</li>
+          <li>Terdapat <strong>{{good_productivity}} mitra</strong> berhasil mencapai target produktivitas bulanan dan bahkan melebihi target tersebut.&nbsp;</li>
+          </ol>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+
+          {% if top_ten_query.exists %}
+          <h6>{{top_ten_query.count}} Mitra dengan Produktivitas Panen Terbaik</h6>
+          <div class=""group w-full text-gray-800 dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50 bg-gray-50 dark:bg-[#444654]"">
+            <div class=""text-base gap-4 md:gap-6 md:max-w-2xl lg:max-w-xl xl:max-w-3xl p-4 md:py-6 flex lg:px-0 m-auto"">
+            <div class=""relative flex w-[calc(100%-50px)] flex-col gap-1 md:gap-3 lg:w-[calc(100%-115px)]"">
+            <div class=""flex flex-grow flex-col gap-3"">
+            <div class=""min-h-[20px] flex flex-col items-start gap-4 whitespace-pre-wrap break-words"">
+            <div class=""markdown prose w-full break-words dark:prose-invert dark"">
+            <ol>
+            {% for item in top_ten_query %}
+            <li>RAJ-MITRA-{{item.id_mitra}} : {{item.nama_mitra}}</li>
+            {% endfor %}
+            </ol>
+            <p>Mitra-mitra tersebut dapat dipertimbangkan untuk diberikan apresiasi atau intensif tersebut karena telah berhasil menunjukkan kinerja terbaik.</p>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+          </div>
+          {% else %}
+          {% endif %}
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+          <!-- <button type="submit" class="btn btn-primary">Export PDF</button> -->
+        </div>
+      </div>    
+  </div>
+</div>
+
+{% endblock %}

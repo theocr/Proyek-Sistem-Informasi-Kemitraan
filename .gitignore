@@ -1,0 +1,35 @@
+# Ignore database files
+*.db
+*.sqlite3
+*.sqlite
+
+# Ignore static files
+/myenv
+
+# Ignore compiled files
+*.pyc
+*.pyo
+*.pyd
+*.class
+
+# Ignore virtual environment
+# myenv/
+
+# Ignore other files
+__pycache__/
+*.log
+*.pot
+*.po
+*.mo
+*.swp
+*.swo
+*.tmp
+*.bak
+*.zip
+*.gz
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.bz2
+myenv/

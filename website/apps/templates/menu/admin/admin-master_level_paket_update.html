@@ -1,0 +1,36 @@
+{% extends 'layouts/base-admin.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="main-content">
+    <section class="section">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-primary text-white-all">
+          <li class="breadcrumb-item"><a ><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'admin_level-paket' %}"><i ></i>Master Level Paket</a></li>
+          <li class="breadcrumb-item"><a ><i ></i>{{level_paket_data.nama_paket}}</a></li>
+        </ol>
+      </nav>
+      <div class="card">
+        <form method="POST" action="{% url 'admin_level-paket_update' id=level_paket_model.id_level_paket %}">
+          {% csrf_token %}
+
+          <div class="card-header">
+            <h4>Detail Level Paket</h4>
+          </div>
+          <div class="card-body">
+              {% crispy form %}    
+              <button class="btn btn-primary " type="submit">Update Data</button>
+                    
+          </div>
+          <div class="card-footer text-right">
+          </div>
+        </form>
+
+      </div>
+    </section>
+</div>
+{% endblock %}

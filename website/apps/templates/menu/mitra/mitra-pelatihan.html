@@ -1,0 +1,86 @@
+{% extends 'layouts/base-mitra.html' %}
+
+
+{% block content %}
+<div class="main-content">
+    <section class="section">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-primary text-white-all">
+          <li class="breadcrumb-item"><a ><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+          <li class="breadcrumb-item"><a ><i ></i>Agenda Pelatihan</a></li>
+        </ol>
+      </nav>
+
+      <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Agenda Pelatihan</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover" id="tab" style="width:100%;">
+                    <thead>
+                        <tr>
+                          <th>Status Pendaftaran</th>
+                          <th>Periode Pendaftaran</th>
+                          <th>Periode Pelatihan</th>
+                          <th>Jenis Pelatihan</th>
+                          <th>Nama Pelatihan</th>
+                          <th>Gelombang</th>
+                          <th>Kuota</th>
+                          <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for item in pelatihan_model %}
+                        <tr data-pk="{{item.id_pelatihan}}">
+                          {% if item.status_pendaftaran == 'BELUM AKTIF'  %}
+                            <td>
+                              <div class="badges">
+                                <span class="badge badge-warning">{{item.status_pendaftaran}}</span>
+                              </div>
+                            </td>
+                          {% elif item.status_pendaftaran == 'AKTIF' %}
+                            <td>
+                              <div class="badges">
+                                <span class="badge badge-success">{{item.status_pendaftaran}}</span>
+                              </div>
+                            </td>
+                          {% elif item.status_pendaftaran == 'TUTUP' %}
+                            <td>
+                              <div class="badges">
+                                <span class="badge badge-danger">{{item.status_pendaftaran}}</span>
+                              </div>
+                            </td>
+                          {% endif %}
+                          <td><strong>{{item.awal_periode_pendaftaran|date:"d-m-Y"}}</strong> sd {{item.akhir_periode_pendaftaran|date:"d-m-Y"}}</td>
+                          <td><strong>{{item.awal_periode_pelatihan|date:"d-m-Y"}}</strong> sd {{item.akhir_periode_pelatihan|date:"d-m-Y"}}</td>
+                          <td>{{item.jenis_pelatihan}}</td>
+                          <td>{{item.nama_pelatihan}}</td>
+                          <td>{{item.gelombang}}</td>
+                          <td>{{item.kuota}} peserta</td>
+
+                          <td>
+                            <a style="text-decoration: None;" href="{% url 'mitra_pelatihan_detail' id=item.id_pelatihan %}" >
+                              <button type="button" class="btn btn-warning">
+                                Lihat Detail
+                              </button>
+                            </a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+
+{% endblock %}

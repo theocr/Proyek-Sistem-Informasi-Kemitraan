@@ -1,0 +1,451 @@
+{% extends 'layouts/base-gudang.html' %}
+
+
+{% block content %}
+<div class="main-content">      
+    <section class="section">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-primary text-white-all">
+            <li class="breadcrumb-item"><a><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'gudang-list_mitra' %}"><i></i>Tracking Mitra</a></li>
+            <li class="breadcrumb-item"><a><i></i>{{mitra_identity}}</a></li>
+          </ol>
+        </nav>
+
+        <div class="section-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h4>Detail Mitra</h4>
+                  <div class="card-header-action">
+                    <a href="{% url 'gudang-list_mitra' %}" class="btn btn-primary">Kembali</a>
+                  </div>  
+
+                </div>
+                <div class="card-body">
+                  <div class="badges">
+                    <span class="badge badge-success">MITRA: {{mitra_identity}}</span>
+                  </div>
+                  <p></p>
+  
+                  <ul class="nav nav-tabs nav-justified">
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="riwayat-tab2" data-toggle="tab" href="#riwayat2" role="tab"
+                        aria-controls="riwayat" aria-selected="true"><strong>Paket Keanggotaan Mitra</strong></a>
+                    </li>  
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link active" id="progress-tab2" data-toggle="tab" href="#progress2" role="tab"
+                        aria-controls="progress" aria-selected="true"><strong>Progress Budidaya</strong> </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="pemanenan-tab2" data-toggle="tab" href="#pemanenan2" role="tab"
+                        aria-controls="pemanenan" aria-selected="false"><strong>Hasil Panen</strong></a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane fade" id="riwayat2" role="tabpanel" aria-labelledby="riwayat-tab2">
+
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="col-12">
+                            <div class="form-group">
+                              <label style="font-size: 14px"><strong><u>Nama Lengkap</u></strong></label><br>
+                              <label>{{mitra_identity}}</label>
+                            </div>
+                            
+                            <div class="form-group">
+                              <label style="font-size: 14px"><strong><u>Tanggal Registrasi</u></strong></label><br>
+                              <label>{{mitra_tgl_registrasi}}</label>
+                            </div>
+
+                            <div class="form-group">
+                              <label style="font-size: 14px"><strong><u>Periode Kontrak</u></strong></label><br>
+                              <label>{{mitra_periode_kontrak}} tahun</label>
+                            </div>
+
+                            <div class="form-group">
+                              <label style="font-size: 14px"><strong><u>Jenis Paket</u></strong></label><br>
+                              <label>{{mitra_level_paket}}</label>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label style="font-size: 14px"><strong><u>Kuota Cacing</u></strong></label><br>
+                                <label>{{mitra_kuota_cacing}} kg</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label style="font-size: 14px"><strong><u>Kuota Media Budidaya</u></strong></label><br>
+                                <label>{{mitra_kuota_media_budidaya }} sak</label>
+                            </div>
+                    
+                            <div class="form-group">
+                              <label style="font-size: 14px"><strong><u>Kuota Panen</u></strong></label><br>
+                              <label>{{mitra_kuota_panen }} kg/bln</label>
+                            </div>
+                  
+                          </div>
+                    
+                        </div>
+                      </div>
+                    </div>
+                    
+
+                    <div class="tab-pane fade show active" id="progress2" role="tabpanel" aria-labelledby="progress-tab2">
+                        <div class="table-responsive">
+                            <table id="tab2" class="table table-striped table-hover" style="width:100%;">
+                              <thead>
+                                  <tr>
+                                    <th style="text-align: center">Tanggal Pengamatan</th>
+                                    <th style="text-align: center">Lokasi Budidaya</th>
+                                    <th style="text-align: center">Level Paket</th>
+                                    <th style="text-align: center">Perkembangan Cacing</th>
+                                    <th style="text-align: center">Kondisi Media Budidaya</th>
+                                    <th style="text-align: center">Keluhan</th>
+                                    <th style="text-align: center">Penilaian Gudang</th>
+                                    <th style="text-align: center">Action</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {% for item in progress_budidaya_detail %}
+                                  <tr>
+                                    <td>{{item.tgl_pengamatan|date:"Y-m-d"}}</td>
+                                    <td>{{item.lokasi_budidaya}}</td>
+                                    <td>{{item.id_mitra.id_level_paket}}</td>
+                                    <td style="text-align: center">
+                                      <a style="text-decoration: None;">
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#staticPerkembanganBackdrop{{item.id_progress_budidaya}}">
+                                          Lihat
+                                        </button>                                   
+                                      </a>                            
+                                    </td>
+                                    <td style="text-align: center">
+                                      <a style="text-decoration: None;">
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#staticKondisiBackdrop{{item.id_progress_budidaya}}">
+                                          Lihat
+                                        </button>                                   
+                                      </a>                            
+          
+                                    </td>
+                                    <td style="text-align: center">
+                                      <a style="text-decoration: None;">
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#staticKeluhanBackdrop{{item.id_progress_budidaya}}">
+                                          Lihat
+                                        </button>                                   
+                                      </a>                            
+          
+                                    </td>
+  
+                                    {% if item.penilaian_gudang == 'TERKONTROL'  %}
+                                    <td style="text-align: center">
+                                      <div class="badges">
+                                        <span class="badge badge-success">{{item.penilaian_gudang}}</span>
+                                      </div>
+                                    </td>
+                                    {% elif item.penilaian_gudang == 'PERLU PENGAWASAN' %}
+                                    <td style="text-align: center">
+                                      <div class="badges">
+                                        <span class="badge badge-danger">{{item.penilaian_gudang}}</span>
+                                      </div>
+                                    </td>
+                                    {% endif %}
+          
+        
+  
+                                    <td style="text-align: center">
+                                      <a style="text-decoration: None;" href="{% url 'gudang-progress_budidaya_update' id=item.id_progress_budidaya %}" >
+                                        <button type="button" class="btn btn-warning">
+                                          Edit
+                                        </button>
+                                      </a>
+                                      <button class="btn btn-danger" data-toggle="modal" data-target="#hapusModalProgressBudidaya{{item.id_progress_budidaya}}">
+                                        Hapus
+                                      </button>                                   
+                                    </td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                            </table>
+                        </div>          
+                    </div>
+                    <div class="tab-pane fade" id="pemanenan2" role="tabpanel" aria-labelledby="pemanenan-tab2">
+                        <div class="table-responsive">
+                          <table id="tab" class="table table-striped table-hover" style="width:100%;">
+                            <thead>
+                                <tr>
+                                  <th>Tanggal Panen</th>
+                                  <th>Berat Bersih Hasil Panen</th>
+                                  <th>Catatan Kelayakan Hasil Panen</th>
+                                  <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in hasil_panen_detail %}
+                                <tr>
+                                  <td>{{item.tgl_panen|date:"Y-m-d"}}</td>
+                                  <td>{{item.berat_hasil_panen}} kg</td>
+                                  <td>
+                                    <a style="text-decoration: None;">
+                                      <button class="btn btn-info" data-toggle="modal" data-target="#staticCatatanPanenBackdrop{{item.id_panen}}">
+                                        Lihat
+                                      </button>                                   
+                                    </a>                            
+                                  </td>
+  
+                                  <td>
+                                    <a style="text-decoration: None;" href="{% url 'gudang-panen_update' id=item.id_panen %}" >
+                                      <button type="button" class="btn btn-warning">
+                                        Edit
+                                      </button>
+                                    </a>
+                                    <button class="btn btn-danger" data-toggle="modal" data-target="#hapusModalPanen{{item.id_panen}}">
+                                      Hapus
+                                    </button>                                   
+                                </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                          </table>
+                      </div>          
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+</div>
+
+<!-- Modal Hapus Recording Pengamatan -->
+{% for item in progress_budidaya_detail %}
+<div class="modal fade" id="hapusModalProgressBudidaya{{item.id_progress_budidaya}}" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="hapusModalLabelProgressBudidaya{{item.id_progress_budidaya}}"
+    aria-hidden="true" name="{{item.id_progress_budidaya}}">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="hapusModalLabelProgressBudidaya{{item.id_progress_budidaya}}">Hapus Record Hasil Pengamatan</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              Anda yakin ingin menghapus record hasil pengamatan ini?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+              <form method="post" action="{% url 'gudang-progress_budidaya_delete' id=item.id_progress_budidaya %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </form>
+
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
+
+<!-- Modal Hapus Recording Hasil Panen -->
+{% for item in hasil_panen_detail %}
+<div class="modal fade" id="hapusModalPanen{{item.id_panen}}" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="hapusModalLabelPanen{{item.id_panen}}"
+    aria-hidden="true" name="{{item.id_panen}}">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="hapusModalLabelPanen{{item.id_panen}}">Hapus Record Hasil Panen</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              Anda yakin ingin menghapus record hasil panen ini?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+              <form method="post" action="{%url 'gudang-panen_delete' item.id_panen %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
+
+
+<!-- Modal Lihat Perkembangan Cacing -->
+{% for item in progress_budidaya_detail %}
+<div class="modal fade" id="staticPerkembanganBackdrop{{item.id_progress_budidaya}}" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticPerkembanganBackdropLabel{{item.id_progress_budidaya}}"
+    aria-hidden="true" name="{{item.id_progress_budidaya}}">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="staticPerkembanganBackdropLabel{{item.id_progress_budidaya}}">Perkembangan Cacing</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              {{item.perkembangan_cacing|safe}}
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
+
+<!-- Modal Lihat Kondisi Media Budidaya -->
+{% for item in progress_budidaya_detail %}
+<div class="modal fade" id="staticKondisiBackdrop{{item.id_progress_budidaya}}" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticKondisiBackdropLabel{{item.id_progress_budidaya}}"
+    aria-hidden="true" name="{{item.id_progress_budidaya}}">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="staticKondisiBackdropLabel{{item.id_progress_budidaya}}">Kondisi Media Budidaya</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              {{item.kondisi_media_budidaya|safe}}
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
+
+<!-- Modal Lihat Keluhan -->
+{% for item in progress_budidaya_detail %}
+<div class="modal fade" id="staticKeluhanBackdrop{{item.id_progress_budidaya}}" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticKeluhanBackdropLabel{{item.id_progress_budidaya}}"
+    aria-hidden="true" name="{{item.id_progress_budidaya}}">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="staticKeluhanBackdropLabel{{item.id_progress_budidaya}}">Keluhan</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              {{item.keluhan|safe}}
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
+
+<!-- Modal Lihat Catatan Hasil Panen -->
+{% for item in hasil_panen_detail %}
+<div class="modal fade" id="staticCatatanPanenBackdrop{{item.id_panen}}" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticCatatanPanenBackdropLabel{{item.id_panen}}"
+    aria-hidden="true" name="{{item.id_panen}}">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="staticCatatanPanenBackdropLabel{{item.id_panen}}">Catatan Kelayakan Hasil Panen</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              {{item.catatan_kelayakan_hasil_panen|safe}}
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
+
+
+
+
+{% endblock %}
+
+<div class="tab-pane fade" id="riwayat2" role="tabpanel" aria-labelledby="riwayat-tab2">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="col-12">
+        <div class="form-group">
+          <label style="font-size: 14px"><strong><u>Nama Lengkap</u></strong></label><br>
+          <label>{{mitra_identity}}</label>
+
+          <!-- <input type="text" class="form-control" readonly value="{{mitra_identity}}"> -->
+      </div>
+      <div class="form-group">
+        <label style="font-size: 14px"><strong><u>Tanggal Lahir</u></strong></label><br>
+        <!-- <input type="text" class="form-control" readonly  placeholder="{{mitra_tgl_lahir}}"> -->
+        <label>{{mitra_tgl_lahir}}</label>
+
+      </div>
+      <div class="form-group">
+        <label style="font-size: 14px"><strong><u>Jenis Kelamin</u></strong></label><br>
+        <!-- <input type="text" class="form-control" readonly  placeholder="{{mitra_tgl_lahir}}"> -->
+        <label>{{mitra_jenis_kelamin}}</label>
+
+      </div>
+      <div class="form-group">
+        <!-- <label>Alamat</label> -->
+        <label style="font-size: 14px"><strong><u>Alamat</u></strong></label><br>
+        <label>{{mitra_alamat|safe}}</label>
+
+        <!-- <textarea name="my_textarea" id="my_textarea" class="form-control" rows="1"></textarea> -->
+      </div>
+
+      <div class="form-group">
+        <label style="font-size: 14px"><strong><u>Jenis Paket</u></strong></label><br>
+        <!-- <input type="text" class="form-control"  readonly value="{{mitra_pelatihan}}"> -->
+        <label>{{mitra_level_paket}}</label>
+      </div>
+
+
+      <div class="form-group">
+          <label style="font-size: 14px"><strong><u>Pendidikan Terakhir</u></strong></label><br>
+          <label>{{mitra_pendidikan}}</label>
+
+          <!-- <input type="text" class="form-control" readonly value="{{mitra_pendidikan}}"> -->
+      </div>
+      <div class="form-group">
+          <label style="font-size: 14px"><strong><u>Pelatihan yang Pernah Diikuti</u></strong></label><br>
+          <!-- <input type="text" class="form-control"  readonly value="{{mitra_pelatihan}}"> -->
+          <label>{{mitra_pelatihan|safe}}</label>
+
+      </div>
+
+      <div class="form-group">
+        <label style="font-size: 14px"><strong><u>Pengalaman Budidaya</u></strong></label><br>
+        <!-- <input type="text" class="form-control" readonly value="{{mitra_pengalaman_kerja}}"> -->
+        <label>{{mitra_pengalaman_kerja|safe}}</label>
+
+      </div>
+      <div class="form-group">
+        <label style="font-size: 14px"><strong><u>Motivasi Bermitra</u></strong></label><br>
+        <label>{{mitra_motivasi_bermitra|safe}}</label>
+
+        <!-- <input type="text" class="form-control" readonly value="{{mitra_motivasi_bermitra}}">
+        <textarea class="form-control" readonly value="{{mitra_motivasi_bermitra}}"></textarea>
+-->
+      </div>    
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+

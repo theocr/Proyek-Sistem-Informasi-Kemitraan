@@ -1,0 +1,140 @@
+{% extends 'layouts/base-gudang.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="main-content">
+    <section class="section">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-primary text-white-all">
+          <li class="breadcrumb-item"><a ><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+          <li class="breadcrumb-item"><a ><i ></i>Pesan Reminder</a></li>
+        </ol>
+      </nav>
+
+      <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Pesan Reminder</h4>
+              </div>
+              <div class="card-body">
+                <div class="text-left">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".tambah-reminder">
+                      Kirim Pesan
+                    </button>
+                </div>
+
+                <p></p>
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover" id="tab" style="width:100%;">
+    
+                    <thead>
+
+                        <tr>
+                          <th>Tanggal Post</th>
+                          <th>Pesan</th>
+                          <th>Nama Mitra</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for item in reminder_query %}
+                        <tr data-pk="{{item.id_notifikasi}}">
+                          <td>{{item.tgl_post|date:"Y-m-d"}}</td>
+                          <td>{{item.pesan|safe}}</td>
+                          <td>{{item.id_mitra.nama_mitra}}</td>
+                          {% if item.status_pelaksanaan == 'DONE'  %}
+                          <td>
+                            <div class="badges">
+                              <span class="badge badge-success">{{item.status_pelaksanaan}}</span>
+                            </div>
+                          </td>
+                          {% elif item.status_pelaksanaan == 'PROGRESS' %}
+                            <td>
+                              <div class="badges">
+                                <span class="badge badge-danger">{{item.status_pelaksanaan}}</span>
+                              </div>
+                            </td>
+                          {% endif %}
+                          <td>
+                            <a style="text-decoration: None;" href="{% url 'gudang-reminder_update' id=item.id_notifikasi %}" >
+                              <button type="button" class="btn btn-warning">
+                                Edit
+                              </button>
+                            </a>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#hapusModal{{item.id_notifikasi}}">
+                              Hapus
+                            </button>                                   
+                          </td>
+                        </tr>
+                      {% endfor %}
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+
+<!-- Modal Kirim Pesan -->
+<div class="modal fade tambah-reminder"  tabindex="-1" role="dialog" aria-labelledby="LargeModaltambah-reminder" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form method="post">
+      {% csrf_token %}
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Compose</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {% crispy form %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+
+        </div>    
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Hapus Jenis Cacing -->
+{% for item in reminder_query %}
+<div class="modal fade" id="hapusModal{{item.id_notifikasi}}" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="hapusModalLabel{{item.id_notifikasi}}"
+    aria-hidden="true" name="{{item.id_notifikasi}}">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="hapusModalLabel{{item.id_notifikasi}}">Hapus Pesan Reminder</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              Anda yakin ingin menghapus pesan reminder ini?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+              <form method="post" action="{%url 'gudang-reminder_delete' item.id_notifikasi %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </form>
+
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'layouts/base-gudang.html' %}
+
+{% block content %}
+
+<div class="main-content">
+    <section class="section">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-primary text-white-all">
+          <li class="breadcrumb-item"><a><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+          <li class="breadcrumb-item"><a><i></i>Tracking Mitra</a></li>
+        </ol>
+      </nav>
+
+      <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Tracking Mitra</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
+    
+                    <thead>
+
+                        <tr>
+                          <th>ID Mitra</th>
+                          <th>Nama Mitra</th>
+                          <th>Tanggal Registrasi</th>
+                          <th>Level Paket</th>
+                          <th>Record Progress Budidaya Terakhir</th>
+                          <th>Record Panen Terakhir</th>
+                          <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for item in mitra_query %}
+                        <tr>
+                          <td>RAJ-MITRA-{{item.id_mitra}}</td>
+                          <td>{{item.nama_mitra}}</td>
+                          <td>{{item.tgl_registrasi|date:"Y-m-d"}}</td>
+                          <td>{{item.id_level_paket}}</td>
+                          <td>
+                            {% if item.all_progress_budidaya %}
+                                {% for progress_budidaya in item.all_progress_budidaya %}
+                                  {{ progress_budidaya.tgl_pengamatan|date:"Y-m-d" }}
+                                {% endfor %}
+                            {% else %}
+                              Belum Pernah
+                            {% endif %}
+                          </td>
+                          <td>
+                            {% if item.all_panen %}
+                                {% for panen in item.all_panen %}
+                                  {{ panen.tgl_panen|date:"Y-m-d" }}
+                                {% endfor %}
+                            {% else %}
+                              Belum Pernah
+                            {% endif %}
+                          </td>
+
+                          <td>
+                            <a style="text-decoration: None;" href="{% url 'gudang-detail_mitra' id=item.id_mitra %}">
+                              <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".edit-pakan">
+                                Lihat Detail
+                              </button>
+                            </a>                            
+                          </td>                                              
+                          </td>
+
+                        </tr>
+                      {% endfor %}
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+
+{% endblock %}

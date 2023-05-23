@@ -1,0 +1,734 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>CV RAJ Organik</title>
+    <!-- General CSS Files -->
+  <link rel="stylesheet" href="{% static 'assets/css/app.min.css' %}">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/components.css' %}">
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+  <link rel='shortcut icon' type='image/x-icon' href="{% static 'assets/img/logo_cv.ico' %}" />
+</head>
+
+<body>
+  <div class="loader"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      {% include "includes/navigation-pegawai.html" %}
+      {% include "includes/sidebar-owner.html" %}
+      <!-- Main Content -->
+      {% block content %}
+        <p>Default</p>
+      {% endblock %}
+
+      <footer class="main-footer">
+        <div class="footer-left">
+          <a>Copyright © Theo Credo 2023</a></a>
+        </div>
+        <div class="footer-right">
+        </div>
+      </footer>
+    
+    </div>
+  </div>
+  <!-- General JS Scripts -->
+  <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+  <!-- JS Libraries -->
+  <script src="{% static 'assets/bundles/datatables/datatables.min.js' %}"></script>
+  <script src="{% static 'assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js' %}"></script>
+  <script src="{% static 'assets/bundles/jquery-ui/jquery-ui.min.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+  <script src="{% static 'assets/bundles/codemirror/lib/codemirror.js' %}"></script>
+  <script src="{% static 'assets/bundles/codemirror/mode/javascript/javascript.js' %}"></script>
+  <script src="{% static 'assets/bundles/jquery-selectric/jquery.selectric.min.js' %}"></script>
+  <script src="{% static 'assets/bundles/ckeditor/ckeditor.js' %}"></script>
+  
+  <!-- Template JS File -->
+  <script src="{% static 'assets/js/scripts.js' %}"></script>
+  
+  <!-- Custom JS File -->
+  <script src="{% static 'assets/js/custom.js' %}"></script>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+  <!-- Page Specific JS File -->
+  <script src="{% static 'assets/js/page/ckeditor.js' %}"></script>
+  <script src="{% static 'assets/js/page/datatables.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'assets/bundles/summernote/summernote-bs4.css' %}">
+  <script src="{% static 'assets/js/page/advance-table.js' %}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<!-- 
+  <script src="{% static 'assets/bundles/apexcharts/apexcharts.min.js' %}"></script>
+  <script src="{% static 'assets/bundles/chartjs/chart.min.js' %}"></script>
+  <script src="{% static 'assets/bundles/jquery.sparkline.min.js' %}"></script>
+  <script src="{% static 'assets/bundles/jqvmap/dist/jquery.vmap.min.js' %}"></script>
+  <script src="{% static 'assets/bundles/jqvmap/dist/maps/jquery.vmap.world.js' %}"></script>
+  <script src="{% static 'assets/bundles/jqvmap/dist/maps/jquery.vmap.indonesia.js' %}"></script>
+ -->
+
+  <!-- Include the required CSS and JS files -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  
+  <!-- Chart JS File -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  
+
+  <!-- Untuk Export Button Tabel Detail Mitra -->
+  <script>
+    $(document).ready(function () {
+      $('#tabel-responsive-search').DataTable();
+    }); 
+
+
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      var table = $('#tab').DataTable({
+          "dom": "<'row'<'col-sm-6'l><'col-sm-6 text-right'B>>" +
+             "<'row'<'col-sm-12'tr>>" +
+             "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+          "buttons": [
+            {
+              "extend": 'excel',
+              "text": '<i class="fas fa-file-excel"></i> Excel',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':visible'
+              }
+            },
+            {
+              "extend": 'pdf',
+              "text": '<i class="fas fa-file-pdf"></i> PDF',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':visible'
+              }
+            },
+            {
+              "extend": 'print',
+              "text": '<i class="fas fa-print"></i> Print',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':visible'
+              }
+            }
+          ],
+        
+        "language": {
+          "search": "",
+          "searchPlaceholder": "Search"
+        },
+        
+        "columnDefs": [{
+          "targets": [0], // column index of the date field
+          "render": function(data, type, row) {
+            return moment(data).format('YYYY-MM-DD'); // format the date as YYYY-MM-DD
+          }
+        }]
+      });
+
+    });
+        
+    $(document).ready(function() {
+      var table = $('#tab2').DataTable({
+          "dom": "<'row'<'col-sm-6'l><'col-sm-6 text-right'B>>" +
+             "<'row'<'col-sm-12'tr>>" +
+             "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+          "buttons": [
+            {
+              "extend": 'excel',
+              "text": '<i class="fas fa-file-excel"></i> Excel',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':visible'
+              }
+            },
+            {
+              "extend": 'pdf',
+              "text": '<i class="fas fa-file-pdf"></i> PDF',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':visible'
+              }
+            },
+            {
+              "extend": 'print',
+              "text": '<i class="fas fa-print"></i> Print',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':visible'
+              }
+            }
+          ],
+        
+        "language": {
+          "search": "",
+          "searchPlaceholder": "Search"
+        },
+        
+        "columnDefs": [{
+          "targets": [0], // column index of the date field
+          "render": function(data, type, row) {
+            return moment(data).format('YYYY-MM-DD'); // format the date as YYYY-MM-DD
+          }
+        }]
+      });
+
+    });
+        
+
+  </script>
+
+  <!-- Untuk Filter Line Chart -->
+  <script>
+    // setup data
+    var usedData = {
+      labels: [{% for item in labels_panen_strings %} '{{ item }}', {% endfor %}],
+        datasets: [{
+          label: 'Berat Hasil Panen (kg)',
+          data: [{% for item in dataset_panen %} '{{ item }}', {% endfor %}],
+          backgroundColor: [
+            'rgba(255, 26, 104, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(0, 0, 0, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 26, 104, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(0, 0, 0, 1)'
+          ],
+          borderWidth: 1
+        }]
+    };
+
+    // configuration 
+    var config = {
+      type: 'line',
+      data : usedData,
+      options: {
+        scales: {
+          x: {
+            type: 'time', 
+            time: {
+              unit: 'month',
+              tooltipFormat: "dd-MM-yyyy",
+            }
+          },
+
+          y: {
+            beginAtZero: true
+          } 
+        },
+
+
+        
+      }
+    };
+
+    // Chart line
+    var myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+
+    
+    $('#filter-btn').on('click', function() {
+      // Ambil data tahun dari form input field
+      const selectedYear = document.getElementById('year-filter').value;
+
+      // Check year field kosong atau tidak
+      if (selectedYear !== '') {
+        // Both input fields have values, perform an action
+            const startDate = moment(`${selectedYear}-01-01`).format('YYYY-MM-DD');
+            const endDate = moment(`${selectedYear}-12-31`).format('YYYY-MM-DD');
+            myChart.config.options.scales.x.min = startDate;
+            myChart.config.options.scales.x.max = endDate;
+
+            // Update the chart
+            myChart.update();
+    } 
+      else {
+        // At least one input field is empty, show an error message
+        alert('Isi Field Tahun');
+      }
+    });
+
+    $('#reset-btn').on('click', function() {
+      // Update the chart data with the original labels
+      const startDate = usedData.labels[0];
+      const lastValueIndex = usedData.datasets[0].data.length - 1;
+      const endDate = usedData.labels[lastValueIndex]
+
+      myChart.config.options.scales.x.min = startDate;
+      myChart.config.options.scales.x.max = endDate;
+
+      // Redraw the chart
+      myChart.update();      
+    });
+
+  </script>
+
+  <!-- Untuk Pie Chart -->
+  <script>
+    // setup data
+    var usedData = {
+      labels: [{% for item in paket_mitra_labels %} '{{ item }}', {% endfor %}],
+        datasets: [{
+          label: 'Jumlah Mitra (orang)',
+          data: [{% for item in paket_mitra_dataset %} '{{ item }}', {% endfor %}],
+          backgroundColor: [
+            'rgba(255, 26, 104, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(0, 0, 0, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 26, 104, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(0, 0, 0, 1)'
+          ],
+          borderWidth: 1
+        }]
+    };
+
+    // mendapatkan ukuran layar
+    var screenWidth = window.innerWidth;
+
+    // menentukan aspect ratio berdasarkan ukuran layar
+    var aspectRatio;
+    if (screenWidth >= 1024) {
+      // untuk laptop atau layar yang lebih besar, aspect ratio = 2
+      aspectRatio = 2;
+    } else {
+      // untuk Android atau iPhone, aspect ratio = 1
+      aspectRatio = 1;
+    }
+
+    // configuration 
+    var config = {
+      type: 'pie',
+      data : usedData,
+      options: {
+        responsive: true,
+        aspectRatio: aspectRatio
+      }
+    };
+
+    // Chart line
+    var myPieChart = new Chart(
+      document.getElementById('myPieChart'),
+      config
+    );
+
+    
+    $('#filter-btn-pie').on('click', function() {
+      // Ambil data tahun dari form input field
+      const selectedYear = document.getElementById('year-filter').value;
+
+      // Check year field kosong atau tidak
+      if (selectedYear !== '') {
+        // Both input fields have values, perform an action
+            const startDate = moment(`${selectedYear}-01-01`).format('YYYY-MM-DD');
+            const endDate = moment(`${selectedYear}-12-31`).format('YYYY-MM-DD');
+            myChart.config.options.scales.x.min = startDate;
+            myChart.config.options.scales.x.max = endDate;
+
+            // Update the chart
+            myChart.update();
+    } 
+      else {
+        // At least one input field is empty, show an error message
+        alert('Isi Field Tahun');
+      }
+    });
+
+    $('#reset-btn-pie').on('click', function() {
+      // Update the chart data with the original labels
+      const startDate = usedData.labels[0];
+      const lastValueIndex = usedData.datasets[0].data.length - 1;
+      const endDate = usedData.labels[lastValueIndex]
+
+      myChart.config.options.scales.x.min = startDate;
+      myChart.config.options.scales.x.max = endDate;
+
+      // Redraw the chart
+      myChart.update();      
+    });
+
+  </script>
+
+  <!-- Untuk Export Button Tabel Owner Hasil Panen & Filter Periode -->
+  <script>
+    // Initialize the DataTable with the Bootstrap theme
+    $(document).ready(function() {
+      var tableFilterPanen = $('#tabFilterTablePanen').DataTable({
+          "dom": "<'row'<'col-sm-6'l><'col-sm-6 text-right'B>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+          "buttons": [
+            {
+              "extend": 'excel',
+              "text": '<i class="fas fa-file-excel"></i> Excel',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            },
+            {
+              "extend": 'pdf',
+              "text": '<i class="fas fa-file-pdf"></i> PDF',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            },
+            {
+              "extend": 'print',
+              "text": '<i class="fas fa-print"></i> Print',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            }
+          ],
+        
+        "language": {
+          "search": "",
+          "searchPlaceholder": "Search"
+        },
+        
+        "columnDefs": [{
+          "targets": [0], // column index of the date field
+          "render": function(data, type, row) {
+            return moment(data).format('YYYY-MM-DD'); // format the date as YYYY-MM-DD
+          }
+        }]
+      });
+
+      $('#submitFilterPanen').on('click', function() {
+        // Get the values of year and month
+        const year_panen = document.getElementById('year-Panen').value;
+        const month_panen = document.getElementById('month-Panen').value;
+
+        
+        // Check if both input fields have values
+        if (year_panen !== '' && month_panen !== '') {
+          // Both input fields have values, perform an action
+          var searchValue = year_panen + '-' + month_panen;
+          tableFilterPanen.column(0).search('^' + searchValue + '-', true, false).draw();
+
+          // tableFilterPanen.column(0).search('^' + year_panen + '-' + month_panen , true, false).draw();
+        } 
+        else {
+          // At least one input field is empty, show an error message
+          alert('Isi Field Tahun dan Bulan');
+        }
+      });
+      $('#resetFilterPanen').on('click', function() {
+        // Remove active filters
+        tableFilterPanen.column(0).search('').draw();
+    });
+
+      $('#submitFilterIDMitra').on('click', function() {
+        // Get the values of year and month
+        const id_mitra = document.getElementById('id_mitra').value;
+        
+        // Check if both input fields have values
+        if (id_mitra !== '') {
+          // Both input fields have values, perform an action
+          tableFilterPanen.column(1).search(id_mitra, true, false).draw();
+
+          // tableFilterPanen.column(0).search('^' + year_panen + '-' + month_panen , true, false).draw();
+        } 
+        else {
+          // At least one input field is empty, show an error message
+          alert('Isi Field ID Mitra');
+        }
+      });
+      $('#resetFilterIDMitra').on('click', function() {
+        // Remove active filters
+        tableFilterPanen.column(1).search('').draw();
+    });
+
+
+    });
+
+  </script>
+
+  <!-- Untuk Export Button Tabel Owner Target Produksi & Filter Periode -->
+  <script>
+    // Initialize the DataTable with the Bootstrap theme
+    $(document).ready(function() {
+      var tableFilterTargetProduksi = $('#tabFilterTableTargetProduksi').DataTable({
+          "dom": "<'row'<'col-sm-6'l><'col-sm-6 text-right'B>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+          "buttons": [
+            {
+              "extend": 'excel',
+              "text": '<i class="fas fa-file-excel"></i> Excel',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            },
+            {
+              "extend": 'pdf',
+              "text": '<i class="fas fa-file-pdf"></i> PDF',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            },
+            {
+              "extend": 'print',
+              "text": '<i class="fas fa-print"></i> Print',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            }
+          ],
+        
+        "language": {
+          "search": "",
+          "searchPlaceholder": "Search"
+        },
+        
+        "columnDefs": [{
+          "targets": [0], // column index of the date field
+          "render": function(data, type, row) {
+            return moment(data).format('YYYY-MM-DD'); // format the date as YYYY-MM-DD
+          }
+        }]
+      });
+
+      $('#submitFilterTargetProduksi').on('click', function() {
+        // Get the values of year and month
+        const year_target_produksi = document.getElementById('year-TargetProduksi').value;
+        const month_target_produksi = document.getElementById('month-TargetProduksi').value;
+
+        
+        // Check if both input fields have values
+        if (year_target_produksi !== '' && month_target_produksi !== '') {
+          // Both input fields have values, perform an action
+          var searchValue = year_target_produksi + '-' + month_target_produksi;
+          tableFilterTargetProduksi.column(0).search('^' + searchValue + '-', true, false).draw();
+
+        } 
+        else {
+          // At least one input field is empty, show an error message
+          alert('Isi Field Tahun dan Bulan');
+        }
+      });
+    $('#resetFilterTargetProduksi').on('click', function() {
+        // Remove active filters
+        tableFilterTargetProduksi.column(0).search('').draw();
+    });
+
+    });
+
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $('#search-table').DataTable();
+    }); 
+    $(document).ready(function () {
+      $('#search-table1').DataTable();
+    }); 
+  </script>
+
+  <!-- Untuk Export Button Tabel Owner Progress Budidaya & Filter Periode -->
+  <script>
+    // Initialize the DataTable with the Bootstrap theme
+    $(document).ready(function() {
+      var tableFilterProgressBudidaya = $('#tabFilterTableProgressBudidaya').DataTable({
+          "dom": "<'row'<'col-sm-6'l><'col-sm-6 text-right'B>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+          "buttons": [
+            {
+              "extend": 'excel',
+              "text": '<i class="fas fa-file-excel"></i> Excel',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            },
+            {
+              "extend": 'pdf',
+              "text": '<i class="fas fa-file-pdf"></i> PDF',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            },
+            {
+              "extend": 'print',
+              "text": '<i class="fas fa-print"></i> Print',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            }
+          ],
+        
+        "language": {
+          "search": "",
+          "searchPlaceholder": "Search"
+        },
+        
+        "columnDefs": [{
+          "targets": [0], // column index of the date field
+          "render": function(data, type, row) {
+            return moment(data).format('YYYY-MM-DD'); // format the date as YYYY-MM-DD
+          }
+        }]
+      });
+
+      $('#submitFilterProgressBudidaya').on('click', function() {
+        // Get the values of year and month
+        const year_progress_budidaya = document.getElementById('year-ProgressBudidaya').value;
+        const month_progress_budidaya = document.getElementById('month-ProgressBudidaya').value;
+
+        
+        // Check if both input fields have values
+        if (year_progress_budidaya !== '' && month_progress_budidaya !== '') {
+          // Both input fields have values, perform an action
+          var searchValue = year_progress_budidaya + '-' + month_progress_budidaya;
+          tableFilterProgressBudidaya.column(0).search('^' + searchValue + '-', true, false).draw();
+
+          // tableFilterPanen.column(0).search('^' + year_panen + '-' + month_panen , true, false).draw();
+        } 
+        else {
+          // At least one input field is empty, show an error message
+          alert('Isi Field Tahun dan Bulan');
+        }
+      });
+    $('#resetFilterProgressBudidaya').on('click', function() {
+        // Remove active filters
+        tableFilterProgressBudidaya.column(0).search('').draw();
+    });
+
+    });
+
+  </script>
+
+
+
+  <!-- Untuk Export Button Tabel Target Rekapitulasi Mitra -->
+  <script>
+    $(document).ready(function () {
+      var tabelMonitoring = $('#tabelMonitoring').DataTable({
+          "dom": "<'row'<'col-sm-6'l><'col-sm-6 text-right'B>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+          "buttons": [
+            {
+              "extend": 'excel',
+              "text": '<i class="fas fa-file-excel"></i> Excel',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            },
+            {
+              "extend": 'pdf',
+              "text": '<i class="fas fa-file-pdf"></i> PDF',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            },
+            {
+              "extend": 'print',
+              "text": '<i class="fas fa-print"></i> Print',
+              "className": 'btn',
+              "exportOptions": {
+                "columns": ':not(:last-child)'
+              }
+            }
+          ],
+        
+        "language": {
+          "search": "",
+          "searchPlaceholder": "Search"
+        },
+
+        "columnDefs": [{
+          "targets": [0], // column index of the date field
+          // "render": function(data, type, row) {
+          //   return moment(data).format('YYYY-MM-DD'); // format the date as YYYY-MM-DD
+          // }
+        }]
+
+
+          
+        
+      }); 
+    }); 
+
+    $('#submitFilterIDMitraExp').on('click', function() {
+        // Get the values of year and month
+        const id_mitra_exp = document.getElementById('id_mitra_exp').value;
+        
+        // Check if both input fields have values
+        if (id_mitra_exp !== '') {
+          // Both input fields have values, perform an action
+          tabelMonitoring.column(0).search(id_mitra_exp, true, false).draw();
+
+          // tableFilterPanen.column(0).search('^' + year_panen + '-' + month_panen , true, false).draw();
+        } 
+        else {
+          // At least one input field is empty, show an error message
+          alert('Isi Field ID Mitra');
+        }
+    });
+
+    $('#resetFilterIDMitraExp').on('click', function() {
+      // Remove active filters
+      tabelMonitoring.column(0).search('').draw();
+    });
+
+
+
+
+  </script>
+
+</body>
+</html>

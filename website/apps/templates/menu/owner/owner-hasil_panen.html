@@ -1,0 +1,110 @@
+{% extends 'layouts/base-owner.html' %}
+
+
+{% block content %}
+<div class="main-content">
+    <section class="section">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-primary text-white-all">
+          <li class="breadcrumb-item"><a><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+          <li class="breadcrumb-item"><a><i></i>Laporan Hasil Panen</a></li>
+        </ol>
+      </nav>
+
+      <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Laporan Hasil Panen Mitra</h4>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label>Filter Periode</label>
+                  <div class="input-group">
+                    <select id="month-Panen" class="form-control" name="month">
+                      <option value="01">Januari</option>
+                      <option value="02">Februari</option>
+                      <option value="03">Maret</option>
+                      <option value="04">April</option>
+                      <option value="05">Mei</option>
+                      <option value="06">Juni</option>
+                      <option value="07">Juli</option>
+                      <option value="08">Agustus</option>
+                      <option value="09">September</option>
+                      <option value="10">Oktober</option>
+                      <option value="11">November</option>
+                      <option value="12">Desember</option>
+                    </select>
+                      <input type="number" id="year-Panen" class="form-control" min="2020" max="2100" placeholder="tahun">
+                    <div class="input-group-append">
+                      <button type="button" id="submitFilterPanen" class="btn btn-primary">
+                        Filter
+                      </button>
+    
+                      <button type="button" class="btn btn-primary" id="resetFilterPanen">
+                        Reset
+                      </button>
+                        </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Cari ID Mitra</label>
+                  <div class="input-group">
+                      <input id="id_mitra" class="form-control" placeholder="RAJ-MITRA-XX">
+                    <div class="input-group-append">
+                      <button type="button" id="submitFilterIDMitra" class="btn btn-primary">
+                        Filter
+                      </button>
+    
+                      <button type="button" class="btn btn-primary" id="resetFilterIDMitra">
+                        Reset
+                      </button>
+                        </div>
+                  </div>
+                </div>
+
+                
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="tabFilterTablePanen" style="width:100%;">  
+                        <thead>
+                            <tr>
+                            <th>Tgl Panen</th>
+                            <th>ID Mitra</th>
+                            <th>Nama Mitra</th>
+                            <th>Level Paket</th>
+                            <th>Berat Bersih Hasil Panen</th>
+                            <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in panen_query %}
+                            <tr>
+                            <td>{{item.tgl_panen|date:'m-d-y'}}</td>
+                            <td>RAJ-MITRA-{{item.id_mitra_id}}</td>
+                            <td>{{item.id_mitra.nama_mitra}}</td>
+                            <td>{{item.id_mitra.id_level_paket}}</td>
+                            <td>{{item.berat_hasil_panen}} kg</td>
+                            <td>
+                              <a style="text-decoration: None;" href="{% url 'owner_detail_mitra' id=item.id_mitra.id_mitra %}">
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".edit-pakan">
+                                  Detail Mitra
+                                </button>
+                              </a>                              
+
+                            </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+
+{% endblock %}

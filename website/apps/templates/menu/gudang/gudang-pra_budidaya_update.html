@@ -1,0 +1,36 @@
+{% extends 'layouts/base-gudang.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="main-content">
+    <section class="section">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-primary text-white-all">
+          <li class="breadcrumb-item"><a ><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'gudang-pra_budidaya' %}"><i ></i>Kebutuhan Mitra Pra Budidaya</a></li>
+          <li class="breadcrumb-item"><a ><i ></i>{{pra_budidaya_data.id_mitra}}</a></li>
+        </ol>
+      </nav>
+      <div class="card">
+        <form method="POST" action="{% url 'gudang-pra_budidaya_update' id=pra_budidaya_model.id_pra_budidaya %}">
+          {% csrf_token %}
+
+          <div class="card-header">
+            <h4>Detail Kebutuhan Mitra Pra Budidaya</h4>
+          </div>
+          <div class="card-body">
+              {% crispy form %}    
+              <button class="btn btn-primary " type="submit">Update Data</button>
+                    
+          </div>
+          <div class="card-footer text-right">
+          </div>
+        </form>
+
+      </div>
+    </section>
+</div>
+{% endblock %}

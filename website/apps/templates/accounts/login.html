@@ -1,0 +1,94 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>CV RAJ Organik</title>
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/app.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/bundles/jquery-selectric/selectric.css' %}">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/components.css' %}">
+    <!-- Custom style CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <link rel='shortcut icon' type='image/x-icon' href="{% static 'assets/img/logo_cv.ico' %}" />
+  </head>
+
+<body>
+  <div class="loader"></div>
+  <div id="app">
+    <section class="section">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <div class="login-brand">
+              Sistem Informasi Kemitraan<br>
+              CV RAJ Organik
+            </div>
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h4>Masuk</h4>
+              </div>
+            
+
+              <div class="card-body">  
+                <form method="POST" class="needs-validation" novalidate="">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="username">Username</label>
+                    {{ form.username }}
+                    <div class="invalid-feedback">
+                      Please fill in your username
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="d-block">
+                      <label for="password" class="control-label">Password</label>
+                    </div>
+                    {{ form.password }}
+                    <div class="invalid-feedback">
+                      Please fill in your password
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>
+                      <span class="col-red">
+                        {% if msg %}
+                          {{ msg | safe }}
+                        {% endif %}
+                      </span>
+                    </label>
+                    <p></p>
+                    <input type="submit" value="Masuk" class="btn btn-pill text-white btn-block btn-primary">
+                  </div>
+                </form>
+
+              </div>
+            </div>
+            <div class="simple-footer">
+              Copyright &copy; Theo Credo 2023
+            </div>         
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- General JS Scripts -->
+  <script src="{% static 'assets/js/app.min.js' %}"></script>
+  <!-- JS Libraies -->
+  <!-- Page Specific JS File -->
+  <!-- Template JS File -->
+  <script src="{% static 'assets/js/scripts.js' %}"></script>
+  <!-- Custom JS File -->
+  <script src="{% static 'assets/js/custom.js' %}"></script>
+</body>
+
+
+<!-- auth-login.html  21 Nov 2019 03:49:32 GMT -->
+</html>
