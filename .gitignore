@@ -13,7 +13,7 @@
 *.class
 
 # Ignore virtual environment
-# myenv/
+myenv/
 
 # Ignore other files
 __pycache__/
@@ -32,4 +32,3 @@ __pycache__/
 *.tar.gz
 *.tgz
 *.bz2
-myenv/
