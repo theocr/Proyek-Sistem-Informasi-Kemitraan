@@ -5,7 +5,7 @@ Perancangan sistem informasi ini dilatar belakangi oleh permasalahan belum terin
 
 Aplikasi web ini dilengkapi dengan fitur  dashboard yang berisi informasi yang penting untuk memantau perkembangan bisnis perusahaan yaitu informasi rekap total mitra, rekap rata-rata panen keseluruhan mitra per bulan, grafik jumlah mitra per level paket, dan grafik transaksi penerimaan hasil panen sepanjang waktu dari seluruh mitra. Selain itu, didalam aplikasi web ini terdapat fitur untuk tracking progress budidaya tiap mitra dan monitoring hasil produksi tiap mitra (berupa summary report dan persentase produktivitas panen tiap mitra) yang dibutuhkan dalam melakukan evaluasi kinerja setiap mitra. Fitur-fitur lain yang tidak disebutkan dapat langsung diuji coba pada https://kemitraan-rajorganik.vercel.app/. 
 
-Silahkan gunakan akun tester berikut untuk mencoba mengakses langsung fitur-fitur yang disediakan pada setiap stakeholder _system user_ dalam aplikasi ini. Selamat mencoba. Kritik dan saran dapat dikirim ke saya melalui email theocredositumorang@gmail.com
+Silahkan gunakan akun tester berikut untuk mencoba mengakses langsung fitur-fitur prototype aplikasi web ini. Selamat mencoba. Kritik dan saran dapat dikirim ke saya melalui email theocredositumorang@gmail.com
 1. Owner
 ```username: owner```
 ```password: pastibisa```
