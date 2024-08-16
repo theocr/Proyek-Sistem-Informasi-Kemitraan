@@ -1,4 +1,4 @@
-# Proyek Skripsi 
+# Proyek Sistem Informasi Kemitraan 
 ![Picture1](https://github.com/theocr/Skripsi-CV-RAJ-Organik/assets/61283808/59b9bd0a-1747-48f4-85f3-19c069b87312)
 ## Latar Belakang 
 Perancangan sistem informasi ini dilatar belakangi oleh permasalahan belum terintegrasinya arus informasi antara pihak mitra dan pihak CV RAJ Organik dalam kegiatan kemitraan mulai dari kegiatan pendaftaran mitra, penyaluran bibit cacing & kebutuhan teknis lainnya, progress pembudidayaan cacing dari mitra hingga penerimaan hasil panen dari mitra.
