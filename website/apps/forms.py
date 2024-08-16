@@ -310,10 +310,6 @@ class PanenForm(forms.ModelForm):
             'berat_hasil_panen': forms.NumberInput(attrs={'placeholder': 'kg'}),
         }    
 
-
-
-
-
 # Using Pelatihan Model
 class PelatihanForm(forms.ModelForm):
     class Meta:
@@ -340,33 +336,5 @@ class PelatihanForm(forms.ModelForm):
             'awal_periode_pelatihan': forms.DateInput(attrs={'type': 'date'}),
             'akhir_periode_pelatihan': forms.DateInput(attrs={'type': 'date'}),
             'link_pendaftaran': forms.URLInput(attrs={'class': 'form-control'})
-
-            # 'periode_pendaftaran': RangeWidget(
-            #     attrs={
-            #         'type': 'date',
-            #         'class': 'form-control',
-            #         'placeholder': 'MM/DD/YYYY',
-            #     },
-            #     base_widget=forms.DateInput(attrs={
-            #         'type': 'date',
-            #         'class': 'form-control',
-            #         'placeholder': 'MM/DD/YYYY',
-            #     }),
-            # ),
-
-            # 'periode_pelatihan': RangeWidget(
-            #     attrs={
-            #         'type': 'date',
-            #         'class': 'form-control',
-            #         'placeholder': 'MM/DD/YYYY',
-            #     },
-            #     base_widget=forms.DateInput(attrs={
-            #         'type': 'date',
-            #         'class': 'form-control',
-            #         'placeholder': 'MM/DD/YYYY',
-            #     }),
-            # ),
-
-
         }    
 
