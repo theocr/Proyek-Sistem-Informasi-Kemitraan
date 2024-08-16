@@ -25,18 +25,12 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None and user.is_admin:
                 login(request, user)
-                # request.session['user_id'] = user.id_pegawai.id_pegawai
-                # user_id = user.id_pegawai.id_pegawai
                 return redirect('admin_dashboard')
             elif user is not None and user.is_owner:
                 login(request, user)
-                # request.session['user_id'] = user.id_pegawai.id_pegawai
-                # user_id = user.id_pegawai.id_pegawai
                 return redirect('owner_dashboard')
             elif user is not None and user.is_gudang:
                 login(request, user)
-                # request.session['user_id'] = user.id_pegawai.id_pegawai
-                # user_id = user.id_mitra.id_mitra
                 return redirect('gudang_dashboard')
             elif user is not None and user.is_mitra:
                 login(request, user)
@@ -82,7 +76,6 @@ def mitra_notifikasi(request):
     else:
         return redirect('login')
 
-# Memang seperti ini adanya kalo notifikasi dengan id auto increment rawan diketahui, makanya ada namanya UUID untuk membuat idnya sulit ditebak
 @mitra_required
 def mitra_notifikasi_update(request, id):
     user_id = request.session.get('user_id')
@@ -222,7 +215,6 @@ def mitra_pelatihan(request):
     else:
         return redirect('login')
 
-
 @mitra_required
 def mitra_detail_pelatihan(request, id):
     user_id = request.session.get('user_id')
@@ -257,8 +249,6 @@ def mitra_detail_pelatihan(request, id):
         else:
             pelatihan_detail = ""
 
-
-
         return render(request, 'menu/mitra/mitra-pelatihan_detail.html', {
             "pelatihan_model": pelatihan_model,
             'notifikasi_data':notifikasi_data, 
@@ -273,14 +263,10 @@ def mitra_detail_pelatihan(request, id):
             "pelatihan_kuota": pelatihan_kuota,
             "pelatihan_cp": pelatihan_cp,
             "pelatihan_link_daftar": pelatihan_link_daftar,
-
-            
             })
-            
 
     else:
         return redirect('login')
-
 
 """
 DESKRIPSI:
@@ -434,8 +420,6 @@ def admin_manage_level_paket_delete(request, id):
         level_paket_data = LevelPaket.objects.get(id_level_paket=id)
         level_paket_data.delete()
         return redirect('admin_level-paket')
-
-
 
 """
 DESKRIPSI:
@@ -680,11 +664,6 @@ def gudang_progress_budidaya_delete(request, id):
 def gudang_panen(request):
     panen = Panen.objects.select_related('id_mitra').all()
     panen = panen.select_related('id_mitra__id_level_paket').all()
-
-    # panen = panen.annotate(
-    #     id_baru=Concat(Value('MIT-'), Cast('id_mitra', CharField())),
-    #     current_date=Now(),
-    # )  
 
     if request.method == 'POST':
         form_panen = PanenForm(request.POST)
